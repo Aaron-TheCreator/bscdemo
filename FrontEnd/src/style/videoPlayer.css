@@ -1,0 +1,27 @@
+.videoCont {
+    /* padding: 20%; */
+    border: 10px solid green;
+    display: flex;
+    flex-direction: column;
+}
+
+.videoHeader {
+    font-size: 2rem;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    /* background-color: white; */
+    color: rgb(23, 47, 128);
+    border: 3px solid gray;
+}
+
+.videoHeader > p:hover {
+    color: red;
+}
+
+.iFrameHolder {
+    border: 3px solid green;
+}

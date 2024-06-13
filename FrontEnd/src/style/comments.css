@@ -1,0 +1,61 @@
+.commentSctn {
+    border: 3px solid black;
+    display: flex;
+    flex-direction: column;
+    min-width: 50%;
+    min-height: 30%;
+    height: 30vh;
+    margin: 1rem;
+    overflow-y: scroll;
+    scrollbar-color: black white;
+    /* align-items: space-between; */
+}
+
+.comment {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 2px solid black;
+}
+
+.commentTxt {
+    font-size: 1rem;
+    color: green;
+    margin-left: 5%;
+    margin-right: 15%;
+    margin-bottom: 5%;
+    border: 0.8rem solid black;
+}
+
+.commentUsername {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: rgb(23, 47, 128);
+    align-self: baseline;
+    margin-left: 15%;
+    margin-bottom: 5%;
+    border: 0.8rem solid black;
+}
+
+.commentTime {
+    font-size: 0.5rem;
+    color: rgb(26, 113, 100);
+    align-self: baseline;
+    margin-left: 15%;
+    margin-bottom: 5%;
+
+}
+
+.commentForm {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: space-between;
+    margin: 1rem;
+}
+
+.commentForm > input {
+    width: 80%;
+    height: 2rem;
+    margin-right: 1rem;
+}
