@@ -1,5 +1,7 @@
 // import testvid from "/videos/testvid01.mp4";
 import "../style/videoPlayer.css"
+const videoLink = import.meta.env.VITE_MAIN_VIDEO;
+console.log("videoLink", videoLink);
 const VideoPlayer = () => {
     return (
         <div className="videoCont">
@@ -17,7 +19,7 @@ const VideoPlayer = () => {
                 muted
                 
             >
-                <source src="https://d19wd71nqr2oyj.cloudfront.net/Video_1.mp4" type="video/mp4" />
+                <source src={videoLink} type="video/mp4" />
             </video>
         </div>
     );
