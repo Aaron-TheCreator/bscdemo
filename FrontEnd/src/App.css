@@ -5,6 +5,25 @@
   text-align: center;
 }
 
+header {
+  width: 90vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 2rem;
+  border: 1px solid red;
+
+}
+
+#userId-login-btn {
+  /* make it a circle */
+  border-radius: 50%;
+  border: 2px solid purple;
+  width: 3em;
+  height: 3em;
+}
+
 /* copy & pasted from codepen */
 /* #circle {
 	width: 95vw;
@@ -91,11 +110,11 @@
 }
 body{
   /* overflow:hidden; */
-  background:#000;
+  /* background:#000;
   transform-style: preserve-3d;
  
   @include perspective(1000px);
-} */
+} */ */
 
 /* end copypasta */
 
@@ -133,4 +152,12 @@ body{
 
 .read-the-docs {
   color: #888;
+}
+
+.video-cont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
 }

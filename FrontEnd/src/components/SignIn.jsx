@@ -1,0 +1,117 @@
+import React, { useState } from 'react';
+import * as Realm from "realm-web";
+import VideoPlayer from './VideoPlayer';
+
+const REALM_APP_ID = import.meta.env.VITE_REALM_APP_ID;
+const app = new Realm.App({ id: REALM_APP_ID });
+const user = app.currentUser;
+const userIsAn0n = user && user.providerType === "anon-user" ? true : false;
+// Create a component that displays the given user's details
+function UserDetail({ user }) {
+    return (
+      <div>
+        <h2>{userIsAn0n ? `hello an0n ${user.id}`: `hello ${user.profile.name}`}</h2>
+      </div>
+    );
+  }
+  
+  // Create a component that lets an anonymous user log in
+  function Login({ setUser }) {
+    const loginAnonymous = async () => {
+      const user = await app.logIn(Realm.Credentials.anonymous(false));
+      console.log("signin.jsx:  Login: user: ", user)
+      setUser(user);
+    };
+    const loginGoogle = async () => {
+        const redirectUrl = window.location.origin + "/google";
+        const credentials = Realm.Credentials.google({redirectUrl})
+        const user = await app.logIn(credentials)
+            .then((user) => {console.log("logged in google user id:", user.id)})
+            .catch((error) => {console.error("error logging in google: ", error)});
+        console.log("signin.jsx:  Login: user: ", user)
+        
+    };
+    
+    return (
+        <div className='loginCard'>
+            <h2>Sign In</h2>
+            <label>Sign in with Google</label>
+            <button onClick={loginGoogle}>Google</button>
+            <label>Sign in as an0n</label>
+            <button onClick={loginAnonymous}>an0n</button>
+        </div>
+    
+
+    );
+  }
+  
+  const SignIn = () => {
+    // Keep the logged in Realm user in local state. This lets the app re-render
+    // whenever the current user changes (e.g. logs in or logs out).
+    const [user, setUser] = React.useState(app.currentUser);
+    // Realm.handleAuthRedirect();
+  
+    // If a user is logged in, show their details.
+    // Otherwise, show the login screen.
+    return (
+      <div className="App">
+        <div className="App-header">
+          {user ? <UserDetail user={user} /> : <Login setUser={setUser} />}
+        </div>
+        <VideoPlayer />
+      </div>
+    );
+  };
+  
+  export default SignIn;
+  
+
+// const SignIn = (comment) => {
+//     const [email, setEmail] = useState('');
+//     const [password, setPassword] = useState('');
+//     const [username, setUsername] = useState('');
+
+//     const commentObj = comment ? comment : false;
+    
+//     const handleEmailChange = (e) => {
+//         setEmail(e.target.value);
+//     };
+
+//     const handleAn0nUsernameChange = (e) => {
+//         setUsername(e.target.value);
+//     };
+//     const handlePasswordChange = (e) => {
+//         setPassword(e.target.value);
+//     };
+
+//     const handleSubmit = (e) => {
+//         e.preventDefault();
+//         // Add your sign-in logic here
+//     };
+
+//     return (
+//         <div>
+//             <h2>Sign In</h2>
+//             <form onSubmit={handleSubmit}>
+//                 <div>
+//                     <label>Email:</label>
+//                     <input type="email" value={email} onChange={handleEmailChange} />
+//                 </div>
+//                 <div>
+//                     <label>Password:</label>
+//                     <input type="password" value={password} onChange={handlePasswordChange} />
+//                 </div>
+//                 <button type="submit">Sign In</button>
+//             </form>
+//             <br />
+//             <span>- OR -</span>
+//             <br />
+//             <form>
+//                 <label>an0n username: </label>
+//                 <input type="text" value={username} onChange={handleAn0nUsernameChange}/>
+//             </form>
+//         </div>
+//     );
+// };
+
+// export default SignIn;

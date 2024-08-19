@@ -1,8 +1,44 @@
+/* border box animation from here https://codepen.io/michellebarker/pen/gOMBPQj */
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 90deg;
+    inherits: true;
+  }
+  
+  @property --gradX {
+    syntax: '<percentage>';
+    initial-value: 50%;
+    inherits: true;
+  }
+  
+  @property --gradY {
+    syntax: '<percentage>';
+    initial-value: 0%;
+    inherits: true;
+  }
+  
+:root {
+	--d: 2500ms;
+	--angle: 90deg;
+	--gradX: 100%;
+	--gradY: 50%;
+	--c1: rgb(6, 220, 34);
+	--c2: rgba(8, 41, 189, 0.324);
+}
+
 .videoCont {
     /* padding: 20%; */
-    border: 10px solid green;
+    max-width: fit-content;
+    border-top: 7px solid rgb(204, 248, 204);
+    border-left: 7px solid rgb(204, 248, 204);
+    border-right: 7px solid rgb(48, 63, 48);
+    border-bottom: 7px solid rgb(48, 63, 48);
+    border-image: conic-gradient(from var(--angle), var(--c2), var(--c1) 0.1turn, var(--c1) 0.15turn, var(--c2) 0.25turn) 30;
+	animation: borderRotate var(--d) linear infinite forwards;
+    background-color: silver;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    margin-bottom: 5%;
 }
 
 .videoHeader {
@@ -22,6 +58,33 @@
     color: red;
 }
 
-.iFrameHolder {
-    border: 3px solid green;
+
+
+@keyframes borderRotate {
+	100% {
+		--angle: 420deg;
+	}
+}
+
+@keyframes borderRadial {
+	20% {
+		--gradX: 100%;
+		--gradY: 50%;
+	}
+	40% {
+		--gradX: 100%;
+		--gradY: 100%;
+	}
+	60% {
+		--gradX: 50%;
+		--gradY: 100%;
+	}
+	80% {
+		--gradX: 0%;
+		--gradY: 50%;
+	}
+	100% {
+		--gradX: 50%;
+		--gradY: 0%;
+	}
 }

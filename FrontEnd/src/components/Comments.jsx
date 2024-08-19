@@ -1,12 +1,26 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import * as Realm from 'realm-web'
 import axios from 'axios';
 import '../style/comments.css';
 
+const REALM_APP_ID = import.meta.env.VITE_REALM_APP_ID;
+const app = new Realm.App({ id: REALM_APP_ID });
+const user = app.currentUser;
+const userIsAn0n = user && user.providerType === "anon-user" ? true : false;
+if (user) {
+    console.log("user is an0n: ", user.providerType === "anon-user")
+    console.log("find username: ", user.profile.name)// undefined if user is anon
+}
 const Comments = () => {
     const [comment, setComment] = useState('');
     const [commentsList, setCommentsList] = useState([]);
 
+    const videoPlayer = document.getElementById('videoPlayer');
+    const boomCmnt = document.getElementById('boomCmnt');
+
     
+
     const getComments = async () => {
         console.log("fetching comments")
         try {
@@ -43,18 +57,39 @@ const Comments = () => {
     };
 
     const handleCommentSubmit = async (e) => {
-        let commentObj = {
-            cmntTxt: comment,
-            username: "user",
-            timeCommented: Math.floor(new Date().getTime() / 1000),
-        };
-        e.preventDefault();
-        let newCommentsList = await sendComment(commentObj);
-        console.log("newCommentsList line 53: ", newCommentsList);
-        setCommentsList(newCommentsList);
-        console.log("commentObj line 55: ", commentObj);
+        if (comment == '') {
+            e.preventDefault();
+            console.error("comment is empty");
+            // display UI error message
+        } else {
+            e.preventDefault();
+            if (user === null) {
+                boomCmnt.addEventListener('click', async () => {
+                    console.log("boomCmnt pip clicked");
+                    boomCmnt.disabled = true;
+                    await videoPlayer.requestPictureInPicture();
+                    boomCmnt.disabled = false;
+                });
+            }
+            let commentObj = {
+                cmntTxt: comment,
+                username: userIsAn0n ? `an0n${user.id}`: user.profile.name,
+                timeCommented: Math.floor(new Date().getTime() / 1000),
+                signedIn: userIsAn0n ? false: true,
+            };
+
+            let newCommentsList = await sendComment(commentObj);
+            console.log("newCommentsList line 53: ", newCommentsList);
+            setCommentsList(newCommentsList);
+            console.log("commentObj line 55: ", commentObj);
         
-        setComment('');
+            setComment('');
+        }
+
+       
+        
+        
+        
     };
 
     // randomize color of element text 
@@ -87,8 +122,8 @@ const Comments = () => {
                     <div className="comment" key={index}>
                         <span className='commentUsername' style={{color: randomColorIndex(0, 3)}}>{comment.username}</span>
                         <span className='commentTxt'>{comment.cmntTxt}</span>
-                        {/* find amount of seconds or if more than 60 secs find number of minutes only */}
-                        <span className='timeAgo'>{ time - comment.timeCommented < 60 ? `${time - comment.timeCommented < 1 ? Math.floor((time - comment.timeCommented) + 3): Math.floor(time - comment.timeCommented)} seconds ago`: `${Math.floor((time - comment.timeCommented) / 60)} minutes ago`}</span>
+                        {/* find amount of seconds or if more than 60 secs find number of minutes only or if more than 60 minutes hours only */}
+                        <span className='timeAgo'>{ time - comment.timeCommented < 60 ? `${time - comment.timeCommented < 1 ? Math.floor((time - comment.timeCommented) + 3): Math.floor(time - comment.timeCommented)} seconds ago`: `${Math.floor((time - comment.timeCommented) / 60) > 60 ? `${Math.trunc(Math.floor((time - comment.timeCommented) / 60)/60)} hours ago`: `${Math.floor((time - comment.timeCommented) / 60)} minutes ago`}  `}</span>
                     </div>
                 ))}
             </div>
@@ -99,7 +134,10 @@ const Comments = () => {
                     onChange={handleCommentChange}
                     placeholder="Say something..."
                 />
-                <button id="boomCmnt" type="submit">Boom</button>
+                <button id="boomCmnt" type="submit">
+                    {!user ?
+                    <Link to={"signin"}>Boom</Link>:'Boom'}
+                    </button>
             </form>
         </div>
     );

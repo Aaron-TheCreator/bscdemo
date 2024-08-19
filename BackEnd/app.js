@@ -1,5 +1,8 @@
 const express = require("express");
 const cors = require("cors");
+const { MongoClient, ServerApiVersion } = require("mongodb");
+
+const mongoURI = process.env.MONGODB_URI;
 
 const app = express();
 
@@ -68,13 +71,37 @@ app.post("/comments", (req, res) => {
   console.log("comment received: ", req.body);
   let newComment = req.body.comment;
   newComment.cmntId = user[1] + 1;
-  newComment.username = `${newComment.username}${user[0] + 1}`;
   user[0]++;
   user[1] = newComment.cmntId;
   newComment.streamId = 1;
-  newComment.signedIn = false;
   comments.push(newComment);
   console.log("comments: ", comments);
   res.send(comments);
   res.end();
 });
+
+// app.get("/users/:userId", (req, res) => {});
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(mongoURI, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+});
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
