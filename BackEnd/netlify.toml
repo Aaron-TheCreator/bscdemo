@@ -2,5 +2,9 @@
   command = "echo Building for Netlify"
 
 [[redirects]]
+  from = "/"
+  to = "/index.html"  // Assuming your frontend serves index.html for root path
+
+[[redirects]]
   from = "/comments"
-  to = "/.netlify/functions/comments"
+  to = "/.netlify/functions/comments"  // Net
