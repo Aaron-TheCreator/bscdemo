@@ -25,6 +25,7 @@ function App() {
     try {
       await app.currentUser.logOut();
       console.log("logged out")
+      location.reload();
     } catch (error) {
       console.error("error logging out: ", error)
     }

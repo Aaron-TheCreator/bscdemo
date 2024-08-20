@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as Realm from "realm-web";
 import VideoPlayer from './VideoPlayer';
 
@@ -6,6 +7,8 @@ const REALM_APP_ID = import.meta.env.VITE_REALM_APP_ID;
 const app = new Realm.App({ id: REALM_APP_ID });
 const user = app.currentUser;
 const userIsAn0n = user && user.providerType === "anon-user" ? true : false;
+
+
 // Create a component that displays the given user's details
 function UserDetail({ user }) {
     return (
@@ -17,16 +20,23 @@ function UserDetail({ user }) {
   
   // Create a component that lets an anonymous user log in
   function Login({ setUser }) {
+    const navigate = useNavigate();
     const loginAnonymous = async () => {
       const user = await app.logIn(Realm.Credentials.anonymous(false));
       console.log("signin.jsx:  Login: user: ", user)
       setUser(user);
+      navigate('/');
+      location.reload();
     };
     const loginGoogle = async () => {
         const redirectUrl = window.location.origin + "/google";
         const credentials = Realm.Credentials.google({redirectUrl})
         const user = await app.logIn(credentials)
-            .then((user) => {console.log("logged in google user id:", user.id)})
+            .then((user) => {
+                console.log("logged in google user id:", user.id)
+                navigate('/');
+                location.reload();
+            })
             .catch((error) => {console.error("error logging in google: ", error)});
         console.log("signin.jsx:  Login: user: ", user)
         

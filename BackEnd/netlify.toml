@@ -1,0 +1,6 @@
+[build]
+  command = "echo Building for Netlify"
+
+[[redirects]]
+  from = "/comments"
+  to = "/.netlify/functions/comments"

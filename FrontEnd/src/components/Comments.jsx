@@ -4,6 +4,7 @@ import * as Realm from 'realm-web'
 import axios from 'axios';
 import '../style/comments.css';
 
+const COMMENTS_BASE_URL = import.meta.env.VITE_COMMENTS_BASE_URL;
 const REALM_APP_ID = import.meta.env.VITE_REALM_APP_ID;
 const app = new Realm.App({ id: REALM_APP_ID });
 const user = app.currentUser;
@@ -16,34 +17,36 @@ const Comments = () => {
     const [comment, setComment] = useState('');
     const [commentsList, setCommentsList] = useState([]);
 
-    const videoPlayer = document.getElementById('videoPlayer');
-    const boomCmnt = document.getElementById('boomCmnt');
+    // const videoPlayer = document.getElementById('videoPlayer');
+    // const boomCmnt = document.getElementById('boomCmnt');
 
     
 
     const getComments = async () => {
         console.log("fetching comments")
         try {
-            const response = await axios.get('http://localhost:3000/comments');
+            const response = await axios.get(COMMENTS_BASE_URL);
+            console.log("response.data: ",response.data);
             setCommentsList(response.data)
-            console.log(response);
-            console.log("comments fetched")
+            // console.log(response);
+            
         } catch (error) {
             console.error("Error getting comments getComments: error: ",error);
         }
+        console.log("comments fetched", commentsList)
     };
 
     const sendComment = async (cmntObj) => {
         let newComment;
         try {
-            console.log("sending comment: ", cmntObj)
+            // console.log("sending comment: ", cmntObj)
             const response = await axios.post(
-                'http://localhost:3000/comments',
+                COMMENTS_BASE_URL,
                 { comment: cmntObj }
             );
-            console.log("response.data: line29",response);
+            // console.log("response.data: ",response);
             newComment = response.data;
-            console.log(cmntObj, "sent")
+            // console.log(cmntObj, "sent")
         } catch (error) {
             console.error(`ERROR sending comment: ${cmntObj} line 31`,error);
 
@@ -63,14 +66,18 @@ const Comments = () => {
             // display UI error message
         } else {
             e.preventDefault();
-            if (user === null) {
-                boomCmnt.addEventListener('click', async () => {
-                    console.log("boomCmnt pip clicked");
-                    boomCmnt.disabled = true;
-                    await videoPlayer.requestPictureInPicture();
-                    boomCmnt.disabled = false;
-                });
-            }
+            // vvv this is intended to trigger PIP on video element
+            // but is broken because sign in isnt a modal but a separate route
+            // will circle back to this at some point
+            // if (user === null) {
+            //     boomCmnt.addEventListener('click', async () => {
+            //         console.log("boomCmnt pip clicked");
+            //         boomCmnt.disabled = true;
+            //         await videoPlayer.requestPictureInPicture();
+            //         boomCmnt.disabled = false;
+            //     });
+            // }
+            console.log("user is an0n: ", user.providerType === "anon-user")
             let commentObj = {
                 cmntTxt: comment,
                 username: userIsAn0n ? `an0n${user.id}`: user.profile.name,
@@ -79,9 +86,9 @@ const Comments = () => {
             };
 
             let newCommentsList = await sendComment(commentObj);
-            console.log("newCommentsList line 53: ", newCommentsList);
-            setCommentsList(newCommentsList);
-            console.log("commentObj line 55: ", commentObj);
+            // console.log("newCommentsList: ", newCommentsList);
+            setCommentsList(newCommentsList[1]);
+            // console.log("commentObj line 55: ", commentObj);
         
             setComment('');
         }

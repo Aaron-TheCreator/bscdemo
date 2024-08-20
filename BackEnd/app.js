@@ -52,14 +52,17 @@ const comments = [
 
 // this actually needs to be a db model with with streaming capabilities sending chunks of comments
 // Path /comments Method: GET
-app.get("/comments", (req, res) => {
-  console.log("comments fetched");
+app.get("/comments", async (req, res) => {
+  console.log("fetching comments");
   //   use db model to fetch comments
-  const commentsList = [];
-  for (let i = 0; i < comments.length; i++) {
-    commentsList.push(comments[i], comments[i], comments[i]);
-  }
+  let commentsList = await getComments();
   console.log("commentsList: ", commentsList);
+  // testing with mock local data
+  // const commentsList = [];
+  // for (let i = 0; i < comments.length; i++) {
+  //   commentsList.push(comments[i], comments[i], comments[i]);
+  // }
+  // console.log("commentsList: ", commentsList);
   res.send(commentsList);
   res.end();
 });
@@ -67,18 +70,54 @@ app.get("/comments", (req, res) => {
 //  fake user
 let user = [3, 125];
 //Path /comments Method: POST
-app.post("/comments", (req, res) => {
+app.post("/comments", async (req, res) => {
   console.log("comment received: ", req.body);
   let newComment = req.body.comment;
-  newComment.cmntId = user[1] + 1;
-  user[0]++;
-  user[1] = newComment.cmntId;
+  // newComment.cmntId = user[1] + 1;
+  // user[0]++;
+  // user[1] = newComment.cmntId;
   newComment.streamId = 1;
-  comments.push(newComment);
-  console.log("comments: ", comments);
-  res.send(comments);
+
+  const result = await sendComment(newComment);
+  // comments.push(result);
+  // console.log("comments: ", comments);
+  res.send(result);
   res.end();
 });
+
+const getComments = async () => {
+  await client.connect();
+  const dbName = process.env.MONGODB_COMMENTS_DB;
+  const collectionName = process.env.MONGODB_COMMENTS_COLLECTION;
+  const db = client.db(dbName);
+  const collection = db.collection(collectionName);
+  try {
+    const result = await collection.find({ streamId: 1 }).toArray();
+    console.log("comments fetched: ", result);
+    return result;
+  } catch (err) {
+    console.error("error fetching comments: ", err);
+  }
+};
+
+const sendComment = async (cmntObj) => {
+  await client.connect();
+  const dbName = process.env.MONGODB_COMMENTS_DB;
+  const collectionName = process.env.MONGODB_COMMENTS_COLLECTION;
+  const db = client.db(dbName);
+  const collection = db.collection(collectionName);
+  try {
+    const result = await collection.insertOne(cmntObj);
+    console.log("comment inserted: ", result);
+    const comntId = result.insertedId;
+    const comment = await collection.findOne({ _id: comntId });
+    const commentsList = await collection.find({ streamId: 1 }).toArray();
+    console.log("comment: ", comment, "commentsList: ", commentsList);
+    return [comment, commentsList];
+  } catch (err) {
+    console.error("error inserting comment: ", err);
+  }
+};
 
 // app.get("/users/:userId", (req, res) => {});
 
