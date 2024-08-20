@@ -3,8 +3,7 @@
 
 [[redirects]]
   from = "/"
-  to = "/index.html"  // Assuming your frontend serves index.html for root path
-
+  to = "/index.html"
 [[redirects]]
   from = "/comments"
-  to = "/.netlify/functions/comments"  // Net
+  to = "/.netlify/functions/comments"
