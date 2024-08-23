@@ -1,6 +1,12 @@
 [build]
   command = "echo Building for Netlify"
 
+[[headers]]
+    for = "/*"
+    [headers.values]
+        Access-Control-Allow-Origin = "http://localhost:5173"
+        Access-Control-Allow-Headers = "*"
+
 [[redirects]]
   from = "/"
   to = "/.netlify/functions/home"

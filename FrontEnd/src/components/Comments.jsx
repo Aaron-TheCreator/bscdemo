@@ -31,15 +31,16 @@ const Comments = () => {
             // console.log(response);
             
         } catch (error) {
-            console.error("Error getting comments getComments: error: ",error);
+            console.error("Error getting comments getComments: error: ",JSON.stringify(error));
         }
-        console.log("comments fetched", commentsList)
+        // console.log("comments fetched", commentsList)
     };
 
     const sendComment = async (cmntObj) => {
         let newComment;
+        console.log("cmntObj: ", cmntObj);
         try {
-            // console.log("sending comment: ", cmntObj)
+            console.log("sending comment: ", cmntObj)
             const response = await axios.post(
                 COMMENTS_BASE_URL,
                 { comment: cmntObj }
@@ -48,7 +49,7 @@ const Comments = () => {
             newComment = response.data;
             // console.log(cmntObj, "sent")
         } catch (error) {
-            console.error(`ERROR sending comment: ${cmntObj} line 31`,error);
+            console.error(`ERROR sending comment: ${cmntObj} line 51`,error);
 
         }
         return newComment;
@@ -84,9 +85,9 @@ const Comments = () => {
                 timeCommented: Math.floor(new Date().getTime() / 1000),
                 signedIn: userIsAn0n ? false: true,
             };
-
+            console.log("commentObj line 88: ", commentObj);
             let newCommentsList = await sendComment(commentObj);
-            // console.log("newCommentsList: ", newCommentsList);
+            console.log("newCommentsList: ", newCommentsList);
             setCommentsList(newCommentsList[1]);
             // console.log("commentObj line 55: ", commentObj);
         
@@ -117,6 +118,32 @@ const Comments = () => {
 
 
     let time = Math.floor(new Date().getTime() / 1000);
+
+    const getTimeDifference = (time, timeCommented) => {
+        const difference = time - timeCommented;
+      
+        if (difference < 60) {
+          return {
+            value: Math.floor(difference < 1 ? difference + 3 : difference),
+            unit: "seconds"
+          };
+        } else if (difference < 3600) {
+          return {
+            value: Math.floor(difference / 60),
+            unit: "minutes"
+          };
+        } else if (difference < 86400) {
+          return {
+            value: Math.floor(difference / 3600),
+            unit: "hours"
+          };
+        } else {
+          return {
+            value: Math.floor(difference / 86400),
+            unit: "days"
+          };
+        }
+    };
     useEffect( () => {
         getComments();
 
@@ -130,7 +157,8 @@ const Comments = () => {
                         <span className='commentUsername' style={{color: randomColorIndex(0, 3)}}>{comment.username}</span>
                         <span className='commentTxt'>{comment.cmntTxt}</span>
                         {/* find amount of seconds or if more than 60 secs find number of minutes only or if more than 60 minutes hours only */}
-                        <span className='timeAgo'>{ time - comment.timeCommented < 60 ? `${time - comment.timeCommented < 1 ? Math.floor((time - comment.timeCommented) + 3): Math.floor(time - comment.timeCommented)} seconds ago`: `${Math.floor((time - comment.timeCommented) / 60) > 60 ? `${Math.trunc(Math.floor((time - comment.timeCommented) / 60)/60)} hours ago`: `${Math.floor((time - comment.timeCommented) / 60)} minutes ago`}  `}</span>
+                        {/* <span className='timeAgo'>{ time - comment.timeCommented < 60 ? `${time - comment.timeCommented < 1 ? Math.floor((time - comment.timeCommented) + 3): Math.floor(time - comment.timeCommented)} seconds ago`: `${Math.floor((time - comment.timeCommented) / 60) > 60 ? `${Math.trunc(Math.floor((time - comment.timeCommented) / 60)/60)} hours ago`: `${Math.floor((time - comment.timeCommented) / 60)} minutes ago`}  `}</span> */}
+                        <span className='timeAgo'>{`${getTimeDifference(time, comment.timeCommented).value} ${getTimeDifference(time, comment.timeCommented).unit} ago`}</span>
                     </div>
                 ))}
             </div>
