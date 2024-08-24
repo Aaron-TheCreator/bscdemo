@@ -6,7 +6,6 @@ let HEADERS = {
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Max-Age": "8640",
 };
-
 // this ID currently needs to be an integer, not yet sure what data type I will use once streamID's
 // represent value from LivePeer or other service
 const CURRENT_STREAM_ID = parseInt(process.env.CURRENT_STREAM_ID);
@@ -83,6 +82,7 @@ const getComments = async (client) => {
   console.log(".env vars loaded: ", dbName, collectionName);
   const db = client.db(dbName);
   const collection = db.collection(collectionName);
+
   try {
     console.log("hitting mongodb db...");
     const result = await collection
@@ -90,6 +90,7 @@ const getComments = async (client) => {
         streamId: Number.isInteger(CURRENT_STREAM_ID) ? CURRENT_STREAM_ID : 1,
       })
       .toArray();
+    await client.close();
     return result;
   } catch (err) {
     console.error("error fetching comments: ", err);
@@ -114,6 +115,7 @@ const sendComment = async (client, cmntObj) => {
     console.log("comment in DB: ", comment);
     const commentsList = await collection.find({ streamId: 1 }).toArray();
     console.log("commentsList from DB: ", commentsList);
+    await client.close();
     return [comment, commentsList];
   } catch (err) {
     console.error("error inserting comment: ", err);
