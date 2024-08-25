@@ -2,6 +2,7 @@ const { MongoClient, ServerApiVersion } = require("mongodb");
 
 let HEADERS = {
   "Access-Control-Allow-Headers": "*",
+  "Access-Control-Allow-Origin": "*",
   "Content-Type": "*/*", //optional
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Max-Age": "8640",
