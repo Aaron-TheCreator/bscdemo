@@ -29,7 +29,7 @@ function UserDetail({ user }) {
       location.reload();
     };
     const loginGoogle = async () => {
-        const redirectUrl = window.location.origin + "/google";
+        const redirectUrl = window.location.origin;
         const credentials = Realm.Credentials.google({redirectUrl})
         const user = await app.logIn(credentials)
             .then((user) => {
