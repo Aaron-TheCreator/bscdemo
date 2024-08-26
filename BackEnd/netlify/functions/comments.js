@@ -5,7 +5,7 @@ let HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Content-Type": "*/*", //optional
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Max-Age": "8640",
+  "Access-Control-Max-Age": "86400",
 };
 // this ID currently needs to be an integer, not yet sure what data type I will use once streamID's
 // represent value from LivePeer or other service
@@ -80,7 +80,7 @@ async function connectToDb(mongoURI) {
 const getComments = async (client) => {
   const dbName = process.env.MONGODB_COMMENTS_DB;
   const collectionName = process.env.MONGODB_COMMENTS_COLLECTION;
-  console.log(".env vars loaded: ", dbName, collectionName);
+  // console.log(".env vars loaded: ", dbName, collectionName);
   const db = client.db(dbName);
   const collection = db.collection(collectionName);
 

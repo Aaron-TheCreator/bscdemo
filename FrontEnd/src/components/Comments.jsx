@@ -152,7 +152,8 @@ const Comments = () => {
     return (
         <div className='commentCont' style={{display: "none"}}>
             <div className='commentSctn'>
-                {commentsList.reverse().map((comment, index) => (
+                {/* used commentsList.reverse().map() here prev, created an index in mongoDB, which returns data already reversed */}
+                {commentsList.map((comment, index) => (
                     <div className="comment" key={index}>
                         <span className='commentUsername' style={{color: randomColorIndex(0, 3)}}>{comment.username}</span>
                         <span className='commentTxt'>{comment.cmntTxt}</span>
