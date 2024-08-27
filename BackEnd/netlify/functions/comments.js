@@ -18,30 +18,38 @@ console.log(
 exports.handler = async (event, context) => {
   const mongoURI = process.env.MONGODB_URI;
   const method = event.httpMethod;
-
-  console.log("Received event:", JSON.stringify(event, null, 2));
+  let now = new Date();
+  console.log(
+    `Received event @ ${now.toString()}: `,
+    JSON.stringify(event, null, 2)
+  );
   // Connect to MongoDB
   const client = await connectToDb(mongoURI);
-  // console.log("Connected to MongoDB", client);
+  console.log("Connected to MongoDB", client);
 
   // I think OPTIONS needs to be handled for CORS outside of the below try/catch block
   try {
     if (method === "OPTIONS") {
+      console.log("client is active : ", client);
       return {
         statusCode: 200,
         HEADERS,
       };
     }
-  } catch (error) {
-    console.error(err);
+  } catch (err) {
+    console.error("Internal server error in OPTIONS block: ", err);
     return {
       statusCode: 500,
       HEADERS,
-      body: JSON.stringify({ message: "Internal server error" }),
+      body: JSON.stringify({
+        message: "Internal server error",
+      }),
     };
-  } finally {
-    await client.close();
   }
+  // } finally {
+  //   await client.close();
+  // }
+  // Handle GET and POST requests
   try {
     if (method === "GET") {
       console.log("Fetching comments...");
@@ -68,11 +76,13 @@ exports.handler = async (event, context) => {
       };
     }
   } catch (err) {
-    console.error(err);
+    console.error("Internal server error in GET, POST, other block", err);
     return {
       statusCode: 500,
       HEADERS,
-      body: JSON.stringify({ message: "Internal server error" }),
+      body: JSON.stringify({
+        message: "Internal server error in GET, POST, other block",
+      }),
     };
   } finally {
     await client.close();
