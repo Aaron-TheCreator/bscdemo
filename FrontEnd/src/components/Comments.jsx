@@ -108,7 +108,7 @@ const Comments = () => {
     // #bb5c37	(187,92,55)
     // #4b0055	(75,0,85)
 
-    let colors = ["#128a84", "#79af30", "#bb5c37", "#4b0055"];
+    let colors = ["#128a84", "#79af30", "#bb5c37", "#4b0055","#52f70a", "#f50b0b","#f80af8","#d6fae2"];
     function randomColorIndex(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -142,7 +142,7 @@ const Comments = () => {
                 value: Math.floor(difference / 86400),
                 unit: "days"
           };
-        } else if (difference < 2419200) {
+        } else if (difference < 2419200 ) {
             return {
                 value: Math.floor(difference / 604800),
                 unit: "weeks"
@@ -159,13 +159,18 @@ const Comments = () => {
 
     }, []);
 
+    window.setInterval(function() {
+        var commentSctn = document.getElementsByClassName('commentSctn')[0];
+        commentSctn.scrollTop = commentSctn.scrollHeight;
+      }, 5000);
+
     return (
         <div className='commentCont' style={{display: "none"}}>
             <div className='commentSctn'>
                 {/* used commentsList.reverse().map() here prev, created an index in mongoDB, which returns data already reversed */}
                 {commentsList.map((comment, index) => (
                     <div className="comment" key={index}>
-                        <span className='commentUsername' style={{color: randomColorIndex(0, 3)}}>{comment.username}</span>
+                        <span className='commentUsername' style={{color: randomColorIndex(0, colors.length-1)}}>{comment.username}</span>
                         <span className='commentTxt'>{comment.cmntTxt}</span>
                         {/* find amount of seconds or if more than 60 secs find number of minutes only or if more than 60 minutes hours only */}
                         {/* <span className='timeAgo'>{ time - comment.timeCommented < 60 ? `${time - comment.timeCommented < 1 ? Math.floor((time - comment.timeCommented) + 3): Math.floor(time - comment.timeCommented)} seconds ago`: `${Math.floor((time - comment.timeCommented) / 60) > 60 ? `${Math.trunc(Math.floor((time - comment.timeCommented) / 60)/60)} hours ago`: `${Math.floor((time - comment.timeCommented) / 60)} minutes ago`}  `}</span> */}
