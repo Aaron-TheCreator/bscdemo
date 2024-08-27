@@ -1,3 +1,20 @@
+video::-webkit-media-controls-play-button {
+    display: none;
+}
+
+video::-webkit-media-controls-timeline {
+    display: none;
+}
+
+video::-webkit-media-controls-current-time-display {
+    display: none;
+}
+
+video::-webkit-media-controls-time-remaining-display {
+    display: none;
+}
+
+
 /* border box animation from here https://codepen.io/michellebarker/pen/gOMBPQj */
 @property --angle {
     syntax: '<angle>';

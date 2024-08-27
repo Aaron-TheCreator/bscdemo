@@ -15,7 +15,7 @@ const VideoPlayer = () => {
                     title="Embedded Video"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     controls
-                    controlsList="nodownload"
+                    controlsList="nodownload noplaybackrate"
                     loop
                     autoPlay
                     muted
