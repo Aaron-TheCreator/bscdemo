@@ -33,6 +33,8 @@ const Comments = () => {
         } catch (error) {
             console.error("Error getting comments getComments: error: ",JSON.stringify(error));
         }
+        let commentSctn = document.getElementsByClassName('commentSctn')[0];
+        commentSctn.scrollTop = commentSctn.scrollHeight;
         // console.log("comments fetched", commentsList)
     };
 
@@ -159,10 +161,10 @@ const Comments = () => {
 
     }, []);
 
-    window.setInterval(function() {
-        var commentSctn = document.getElementsByClassName('commentSctn')[0];
-        commentSctn.scrollTop = commentSctn.scrollHeight;
-      }, 5000);
+    // window.setInterval(function() {
+    //     var commentSctn = document.getElementsByClassName('commentSctn')[0];
+    //     commentSctn.scrollTop = commentSctn.scrollHeight;
+    //   }, 5000);
 
     return (
         <div className='commentCont' style={{display: "none"}}>
