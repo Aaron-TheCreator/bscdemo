@@ -25,12 +25,12 @@ exports.handler = async (event, context) => {
   );
   // Connect to MongoDB
   const client = await connectToDb(mongoURI);
-  console.log("Connected to MongoDB", client);
+  // console.log("Connected to MongoDB", client);
 
   // I think OPTIONS needs to be handled for CORS outside of the below try/catch block
   try {
     if (method === "OPTIONS") {
-      console.log("client is active : ", client);
+      // console.log("client is active : ", client);
       return {
         statusCode: 200,
         HEADERS,

@@ -1,8 +1,8 @@
-# React + Vite
+# Front End README
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the front end of BestServedColdWeb! This README provides an overview of the front end codebase and instructions on how to get started.
 
-Currently, two official plugins are available:
+# Deployment
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This repo is deployed as Netlify (Srverless) Functions here
+[![Netlify Status](https://api.netlify.com/api/v1/badges/72210a2e-9160-4722-98b7-f515c9862f8c/deploy-status)](https://app.netlify.com/sites/bestservedcold/deploys)
