@@ -10,6 +10,8 @@
 [[redirects]]
   from = "/"
   to = "/.netlify/functions/home"
+  status = 200
 [[redirects]]
   from = "/comments"
   to = "/.netlify/functions/comments"
+  status = 200
