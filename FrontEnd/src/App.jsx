@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import * as Realm from 'realm-web'
 // import VideoPlayer from './components/VideoPlayer.jsx';
 import Comments from './components/Comments.jsx';
@@ -37,7 +37,9 @@ function App() {
     <>
       <header>
         <h1>Best Served Cold 🧊🥶 0.0.1</h1>
-        <div id='userId-login-btn'>{user ? `✅`: `❌`}</div>
+        {user ? 
+        <div id='userId-login-btn'>{user ? `✅`: `❌`}</div> :
+        <div id='userId-login-btn'><Link to={"signin"}>{user ? `✅`: `❌`}</Link></div>}
       </header>
       <Outlet />
       

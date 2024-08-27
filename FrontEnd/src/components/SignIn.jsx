@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Realm from "realm-web";
 import VideoPlayer from './VideoPlayer';
+import '../style/signin.css';
 
 const REALM_APP_ID = import.meta.env.VITE_REALM_APP_ID;
 const app = new Realm.App({ id: REALM_APP_ID });
 const user = app.currentUser;
 const userIsAn0n = user && user.providerType === "anon-user" ? true : false;
+// const videoPlayer = document.getElementById('videoPlayer');
 
 
 // Create a component that displays the given user's details
@@ -46,8 +48,11 @@ function UserDetail({ user }) {
         <div className='loginCard'>
             <h2>Sign In</h2>
             <label>Sign in with Google</label>
+            <br/>
             <button onClick={loginGoogle}>Google</button>
+            <br/>
             <label>Sign in as an0n</label>
+            <br/>
             <button onClick={loginAnonymous}>an0n</button>
         </div>
     
@@ -60,12 +65,12 @@ function UserDetail({ user }) {
     // whenever the current user changes (e.g. logs in or logs out).
     const [user, setUser] = React.useState(app.currentUser);
     // Realm.handleAuthRedirect();
-  
+    // await videoPlayer.requestPictureInPicture();
     // If a user is logged in, show their details.
     // Otherwise, show the login screen.
     return (
       <div className="App">
-        <div className="App-header">
+        <div className="signInCont">
           {user ? <UserDetail user={user} /> : <Login setUser={setUser} />}
         </div>
         <VideoPlayer />
