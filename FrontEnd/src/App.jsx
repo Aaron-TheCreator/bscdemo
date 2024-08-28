@@ -38,8 +38,9 @@ function App() {
       <header>
         <h1>Best Served Cold 🧊🥶 0.0.1</h1>
         {user ? 
-        <div id='userId-login-btn'>{user ? `✅`: `❌`}</div> :
-        <div id='userId-login-btn'><Link to={"signin"}>{user ? `✅`: `❌`}</Link></div>}
+        <><div id='userId-login-btn'>{"✅"}</div>
+        <button onClick={handleLogout}> Log out</button></> :
+        <div id='userId-login-btn'><Link to={"signin"}>{"❌"}</Link></div>}
       </header>
       <Outlet />
       
@@ -49,9 +50,9 @@ function App() {
       </div>
       <br/>
       <br/>
-      {user ? 
+      {/* {user ? 
       <button onClick={handleLogout}> Log out</button> :
-      <></>}
+      <></>} */}
     </>
   )
 }
