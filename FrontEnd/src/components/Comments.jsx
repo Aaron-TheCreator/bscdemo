@@ -23,10 +23,10 @@ const Comments = () => {
     
 
     const getComments = async () => {
-        console.log("fetching comments")
+        // console.log("fetching comments")
         try {
             const response = await axios.get(COMMENTS_BASE_URL);
-            console.log("response.data: ",response.data);
+            // console.log("response.data: ",response.data);
             setCommentsList(response.data)
             // console.log(response);
             
@@ -40,9 +40,9 @@ const Comments = () => {
 
     const sendComment = async (cmntObj) => {
         let newComment;
-        console.log("cmntObj: ", cmntObj);
+        // console.log("cmntObj: ", cmntObj);
         try {
-            console.log("sending comment: ", cmntObj)
+            // console.log("sending comment: ", cmntObj)
             const response = await axios.post(
                 COMMENTS_BASE_URL,
                 { comment: cmntObj }
@@ -125,37 +125,57 @@ const Comments = () => {
         const difference = time - timeCommented;
       
         if (difference < 60) {
-            return {
-                value: Math.floor(difference < 1 ? difference + 3 : difference),
-                unit: "seconds"
+          return {
+            value: Math.floor(difference < 1 ? difference + 3 : difference),
+            unit: "seconds"
+          };
+        } else if (difference === 60) {
+          return {
+            value: 1,
+            unit: "minute"
           };
         } else if (difference < 3600) {
-            return {
-                value: Math.floor(difference / 60),
-                unit: "minutes"
+          return {
+            value: Math.floor(difference / 60),
+            unit: "minutes"
+          };
+        } else if (difference === 3600) {
+          return {
+            value: 1,
+            unit: "hour"
           };
         } else if (difference < 86400) {
-            return {
-                value: Math.floor(difference / 3600),
-                unit: "hours"
+          return {
+            value: Math.floor(difference / 3600),
+            unit: "hours"
+          };
+        } else if (difference < 172800) {
+          return {
+            value: 1,
+            unit: "day"
           };
         } else if (difference < 604800) {
-            return {
-                value: Math.floor(difference / 86400),
-                unit: "days"
+          return {
+            value: Math.floor(difference / 86400),
+            unit: "days"
           };
-        } else if (difference < 2419200 ) {
-            return {
-                value: Math.floor(difference / 604800),
-                unit: "weeks"
-            };
+        } else if (difference < 1209600) {
+          return {
+            value: 1,
+            unit: "week"
+          };
+        } else if (difference < 2419200) {
+          return {
+            value: Math.floor(difference / 604800),
+            unit: "weeks"
+          };
         } else if (difference < 29030400) {
-            return {
-                value: Math.floor(difference / 2419200),
-                unit: "months"
-            };
+          return {
+            value: Math.floor(difference / 2419200),
+            unit: "month"
+          };
         }
-    };
+      };
     useEffect( () => {
         getComments();
 
@@ -192,6 +212,7 @@ const Comments = () => {
                     <Link to={"signin"}>Boom</Link>:'Boom'}
                     </button>
             </form>
+            <pre></pre>
         </div>
     );
 };
