@@ -14,7 +14,7 @@ h1 > a {
 }
 
 header {
-  width: 90vw;
+  max-width: 85vw;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
