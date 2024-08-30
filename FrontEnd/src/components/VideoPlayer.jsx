@@ -1,7 +1,12 @@
 // import testvid from "/videos/testvid01.mp4";
 import "../style/videoPlayer.css"
 const videoLink = import.meta.env.VITE_MAIN_VIDEO;
-const VideoPlayer = () => {
+const VideoPlayer = ({triggerPIP}) => {
+    const videoPlayer = document.getElementById('videoPlayer');
+    console.log("found element: ", videoPlayer, "triggerPIP? : ", triggerPIP)
+    if (videoPlayer != null && triggerPIP) {
+        videoPlayer.requestPictureInPicture()
+    }
     return (
         <div className="video-cont">
             {/* <div className="videoHeader">

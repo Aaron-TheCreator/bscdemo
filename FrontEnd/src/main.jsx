@@ -6,6 +6,7 @@ import SignIn from './components/SignIn.jsx';
 import './index.css'
 import VideoPlayer from './components/VideoPlayer.jsx';
 import GoogleAuth from './components/GoogleAuth.jsx';
+import User from './components/User.jsx';
 
 const router = createBrowserRouter([
   {
@@ -18,11 +19,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/",
-        element: <VideoPlayer />,
+        element: <VideoPlayer triggerPIP={false}/>,
       },
       {
         path: "/google",
         element: <GoogleAuth />
+      },
+      {
+        path: "/user",
+        element: <User />
       }
     ],
   },

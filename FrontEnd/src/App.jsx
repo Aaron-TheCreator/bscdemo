@@ -11,6 +11,7 @@ const app = new Realm.App({ id: REALM_APP_ID });
 function App() {
   // const [comments, setComments] = useState(0)
   const user = app.currentUser;
+  console.log("user: ", user?.identities)
   
   const handleComments = (e) => {
     e.preventDefault();
@@ -20,7 +21,7 @@ function App() {
 
   }
 
-  const handleLogout = async (e) => {
+  const handleLogout = async () => {
     
     try {
       await app.currentUser.logOut();
@@ -36,9 +37,9 @@ function App() {
   return (
     <>
       <header>
-        <h1>Best Served Cold 🧊🥶 0.0.1</h1>
+        <h1><Link to={"/"}>Best Served Cold 🧊🥶 0.0.1</Link></h1>
         {user ? 
-        <><div id='userId-login-btn'>{"✅"}</div>
+        <><div id='userId-login-btn'><Link to={"user"}>{"✅"}</Link></div>
         <button onClick={handleLogout}> Log out</button></> :
         <div id='userId-login-btn'><Link to={"signin"}>{"❌"}</Link></div>}
       </header>

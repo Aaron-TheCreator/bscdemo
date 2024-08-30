@@ -10,19 +10,19 @@ let HEADERS = {
 // this ID currently needs to be an integer, not yet sure what data type I will use once streamID's
 // represent value from LivePeer or other service
 const CURRENT_STREAM_ID = parseInt(process.env.CURRENT_STREAM_ID);
-console.log(
-  "CURRENT_STREAM_ID is valid integer : ",
-  Number.isInteger(CURRENT_STREAM_ID)
-);
+// console.log(
+//   "CURRENT_STREAM_ID is valid integer : ",
+//   Number.isInteger(CURRENT_STREAM_ID)
+// );
 
 exports.handler = async (event, context) => {
   const mongoURI = process.env.MONGODB_URI;
   const method = event.httpMethod;
-  let now = new Date();
-  console.log(
-    `Received event @ ${now.toString()}: `,
-    JSON.stringify(event, null, 2)
-  );
+  // let now = new Date();
+  // console.log(
+  //   `Received event @ ${now.toString()}: `,
+  //   JSON.stringify(event, null, 2)
+  // );
   // Connect to MongoDB
   const client = await connectToDb(mongoURI);
   // console.log("Connected to MongoDB", client);
@@ -52,7 +52,7 @@ exports.handler = async (event, context) => {
   // Handle GET and POST requests
   try {
     if (method === "GET") {
-      console.log("Fetching comments...");
+      // console.log("Fetching comments...");
       const comments = await getComments(client);
       return {
         statusCode: 200,
@@ -109,7 +109,7 @@ const getComments = async (client) => {
   const collection = db.collection(collectionName);
 
   try {
-    console.log("hitting mongodb db...");
+    // console.log("hitting mongodb db...");
     const result = await collection
       .find({
         streamId: Number.isInteger(CURRENT_STREAM_ID) ? CURRENT_STREAM_ID : 1,

@@ -73,7 +73,7 @@ function UserDetail({ user }) {
         <div className="signInCont">
           {user ? <UserDetail user={user} /> : <Login setUser={setUser} />}
         </div>
-        <VideoPlayer />
+        <VideoPlayer triggerPIP={true}/>
       </div>
     );
   };

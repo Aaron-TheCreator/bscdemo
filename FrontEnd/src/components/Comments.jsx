@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as Realm from 'realm-web'
 import axios from 'axios';
+import getTimeDifference from '../utils/getTimeDiff.js';
 import '../style/comments.css';
 
 const COMMENTS_BASE_URL = import.meta.env.VITE_COMMENTS_BASE_URL;
@@ -26,7 +27,7 @@ const Comments = () => {
         // console.log("fetching comments")
         try {
             const response = await axios.get(COMMENTS_BASE_URL);
-            // console.log("response.data: ",response.data);
+            console.log("response.data: ",response.data);
             setCommentsList(response.data)
             // console.log(response);
             
@@ -121,61 +122,7 @@ const Comments = () => {
 
     let time = Math.floor(new Date().getTime() / 1000);
 
-    const getTimeDifference = (time, timeCommented) => {
-        const difference = time - timeCommented;
-      
-        if (difference < 60) {
-          return {
-            value: Math.floor(difference < 1 ? difference + 3 : difference),
-            unit: "seconds"
-          };
-        } else if (difference === 60) {
-          return {
-            value: 1,
-            unit: "minute"
-          };
-        } else if (difference < 3600) {
-          return {
-            value: Math.floor(difference / 60),
-            unit: "minutes"
-          };
-        } else if (difference === 3600) {
-          return {
-            value: 1,
-            unit: "hour"
-          };
-        } else if (difference < 86400) {
-          return {
-            value: Math.floor(difference / 3600),
-            unit: "hours"
-          };
-        } else if (difference < 172800) {
-          return {
-            value: 1,
-            unit: "day"
-          };
-        } else if (difference < 604800) {
-          return {
-            value: Math.floor(difference / 86400),
-            unit: "days"
-          };
-        } else if (difference < 1209600) {
-          return {
-            value: 1,
-            unit: "week"
-          };
-        } else if (difference < 2419200) {
-          return {
-            value: Math.floor(difference / 604800),
-            unit: "weeks"
-          };
-        } else if (difference < 29030400) {
-          return {
-            value: Math.floor(difference / 2419200),
-            unit: "month"
-          };
-        }
-      };
+    
     useEffect( () => {
         getComments();
 
@@ -192,7 +139,7 @@ const Comments = () => {
                 {/* used commentsList.reverse().map() here prev, created an index in mongoDB, which returns data already reversed */}
                 {commentsList.map((comment, index) => (
                     <div className="comment" key={index}>
-                        <span className='commentUsername' style={{color: randomColorIndex(0, colors.length-1)}}>{comment.username}</span>
+                        <span className='commentUsername' ><Link to={"user"} state={{username: comment.username}} style={{color: randomColorIndex(0, colors.length-1)}}>{comment.username}</Link></span>
                         <span className='commentTxt'>{comment.cmntTxt}</span>
                         {/* find amount of seconds or if more than 60 secs find number of minutes only or if more than 60 minutes hours only */}
                         {/* <span className='timeAgo'>{ time - comment.timeCommented < 60 ? `${time - comment.timeCommented < 1 ? Math.floor((time - comment.timeCommented) + 3): Math.floor(time - comment.timeCommented)} seconds ago`: `${Math.floor((time - comment.timeCommented) / 60) > 60 ? `${Math.trunc(Math.floor((time - comment.timeCommented) / 60)/60)} hours ago`: `${Math.floor((time - comment.timeCommented) / 60)} minutes ago`}  `}</span> */}

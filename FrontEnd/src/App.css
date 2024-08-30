@@ -5,6 +5,14 @@
   text-align: center;
 }
 
+h1 > a {
+  font-size: 5rem;
+  font-weight: 900;
+  color: aliceblue;
+  /* margin-bottom: 1rem; */
+
+}
+
 header {
   width: 90vw;
   display: flex;
@@ -16,12 +24,18 @@ header {
 
 }
 
+header:hover {
+  background-image: url("/matrixy.gif");
+} 
+
 #userId-login-btn {
   /* make it a circle */
   border-radius: 50%;
   border: 2px solid purple;
   width: 3em;
   height: 3em;
+  background-image: url("/hypno.gif");
+  background-position: center;
 }
 
 /* copy & pasted from codepen */

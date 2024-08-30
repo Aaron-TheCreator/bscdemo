@@ -15,3 +15,7 @@
   from = "/comments"
   to = "/.netlify/functions/comments"
   status = 200
+[[redirects]]
+  from = "/users/"
+  to = "/.netlify/functions/users/"
+  status = 200
