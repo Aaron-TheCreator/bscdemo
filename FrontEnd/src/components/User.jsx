@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as Realm from 'realm-web';
+import {useAddress, useOwnedNFTs, useWallet} from '@thirdweb-dev/react';
 import VideoPlayer from './VideoPlayer';
 import getTimeDifference from '../utils/getTimeDiff.js';
 import { useLocation } from 'react-router-dom';
@@ -47,6 +48,8 @@ const User = () => {
     };
 
     const getUserOwnedTokens = async (user) => {
+        let wallet = useAddress();
+        useOwnedNFTs(user);
         console.log("fetching user's owned tokens");
         setUserOwnedTokens([`${user}test`, `${user}test2`, `${user}test3`]);
     };

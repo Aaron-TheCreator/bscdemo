@@ -1,17 +1,17 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-}
+} */
 
-h1 > a {
+/* h1 > a {
   font-size: 5rem;
   font-weight: 900;
   color: aliceblue;
-  /* margin-bottom: 1rem; */
+  margin-bottom: 1rem;comment this back out if needed
 
-}
+} */
 
 header {
   max-width: 85vw;
@@ -21,15 +21,16 @@ header {
   align-items: center;
   margin-bottom: 2rem;
   border: 1px solid red;
-
+  background-image: url("/matrixy.gif");
 }
 
-header:hover {
+/* header:hover {
   background-image: url("/matrixy.gif");
-} 
+}  */
 
+/*
 #userId-login-btn {
-  /* make it a circle */
+  /* make it a circle *//*
   border-radius: 50%;
   border: 2px solid purple;
   width: 3em;
@@ -37,7 +38,8 @@ header:hover {
   background-image: url("/hypno.gif");
   background-position: center;
 }
-
+/*
+/* start prev commented out code */
 /* copy & pasted from codepen */
 /* #circle {
 	width: 95vw;
@@ -128,7 +130,7 @@ body{
   transform-style: preserve-3d;
  
   @include perspective(1000px);
-} */ */
+} */
 
 /* end copypasta */
 
@@ -159,8 +161,9 @@ body{
     animation: logo-spin infinite 20s linear;
   }
 } */
+ /* end prev commented out code */
 
-.card {
+/* .card {
   padding: 2em;
 }
 
@@ -174,4 +177,80 @@ body{
   align-items: center;
   justify-content: center;
   margin: 1rem;
+} */
+
+/* revised with gemini in VSCode even though i have copilot smfh */
+/* Base styles */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+#root {
+  max-width: 90vw;
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Header */
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  border: 1px solid red;
+}
+
+h1 > a {
+  font-size: 3rem;
+  font-weight: 900;
+  color: aliceblue;
+}
+
+#userId-login-btn {
+  border-radius: 50%;
+  border: 2px solid purple;
+  width: 3em;
+  height: 3em;
+  background-image: url("/hypno.gif");
+  background-position: center;
+}
+
+/* Card */
+.card {
+  padding: 1rem;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Video container */
+.video-cont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem;
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+  header {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  header:hover {
+    background-image: url("/matrixy.gif");
+  } 
+
+  h1 > a {
+    font-size: 3rem;
+  }
+
+  /* Add other style adjustments for larger screens here */
 }

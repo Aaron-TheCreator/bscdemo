@@ -1,4 +1,4 @@
-.commentSctn {
+/* .commentSctn {
     border: 3px solid blue;
     display: flex;
     flex-direction: column;
@@ -8,7 +8,7 @@
     margin: 1rem;
     overflow-y: scroll;
     scrollbar-color: orange white;
-    /* align-items: space-between; */
+    /* align-items: space-between; *//*
 }
 
 .comment {
@@ -44,7 +44,7 @@
     margin-left: 15%;
     margin-bottom: 5%;
 
-} */
+} *//*
 
 .timeAgo {
     color: white;
@@ -62,4 +62,73 @@
     width: 80%;
     height: 2rem;
     margin-right: 1rem;
+} */
+
+/* Base styles */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+  .commentSctn {
+    min-width: 300px; /* Adjust as needed */
+    margin: 2rem;
+  }
+}
+
+/* Default styles (apply to all screens) */
+.commentSctn {
+  border: 3px solid blue;
+  display: flex;
+  flex-direction: column;
+  min-width: 100%; /* Ensure it takes up the full width on smaller screens */
+  min-height: 30%;
+  height: 30vh;
+  margin: 1rem;
+  overflow-y: scroll;
+  scrollbar-color: orange white;
+}
+
+.comment {
+  display: flex;
+  flex-direction: column; /* Change to column for smaller screens */
+  justify-content: space-between;
+  border: 2px solid blue;
+}
+
+.commentTxt {
+  font-size: 1rem;
+  color: green;
+  margin: 0.5rem; /* Adjust margins for smaller screens */
+  border: 0.8rem solid black;
+}
+
+.commentUsername {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: rgb(23, 47, 128);
+  align-self: baseline;
+  margin: 0.5rem; /* Adjust margins for smaller screens */
+  border: 0.8rem solid black;
+}
+
+.timeAgo {
+  color: white;
+}
+
+.commentForm {
+  display: flex;
+  flex-direction: column; /* Change to column for smaller screens */
+  justify-content: space-between;
+  align-items: space-between;
+  margin: 1rem;
+}
+
+.commentForm > input {
+  width: 100%; /* Take up the full width on smaller screens */
+  height: 2rem;
+  margin-right: 0; /* Remove margin on smaller screens */
 }

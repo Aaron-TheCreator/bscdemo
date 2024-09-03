@@ -1,4 +1,4 @@
-video::-webkit-media-controls-play-button {
+/* video::-webkit-media-controls-play-button {
     display: none;
 }
 
@@ -12,11 +12,11 @@ video::-webkit-media-controls-current-time-display {
 
 video::-webkit-media-controls-time-remaining-display {
     display: none;
-}
+} */
 
 
 /* border box animation from here https://codepen.io/michellebarker/pen/gOMBPQj */
-@property --angle {
+/* @property --angle {
     syntax: '<angle>';
     initial-value: 90deg;
     inherits: true;
@@ -41,10 +41,10 @@ video::-webkit-media-controls-time-remaining-display {
 	--gradY: 50%;
 	--c1: rgb(6, 220, 34);
 	--c2: rgba(8, 41, 189, 0.324);
-}
+} */
 
-.videoCont {
-    /* padding: 20%; */
+/* .videoCont {
+    /* padding: 20%; *//*
     max-width: fit-content;
     border-top: 7px solid rgb(204, 248, 204);
     border-left: 7px solid rgb(204, 248, 204);
@@ -66,7 +66,7 @@ video::-webkit-media-controls-time-remaining-display {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    /* background-color: white; */
+    /* background-color: white; *//*
     color: rgb(23, 47, 128);
     border: 3px solid gray;
 }
@@ -104,4 +104,133 @@ video::-webkit-media-controls-time-remaining-display {
 		--gradX: 50%;
 		--gradY: 0%;
 	}
+} */
+
+/* more gemini refactoring */
+/* Base styles */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Hide native video controls */
+video::-webkit-media-controls-play-button {
+  display: none;
+}
+
+video::-webkit-media-controls-timeline {
+  display: none;
+}
+
+video::-webkit-media-controls-current-time-display {
+  display: none;
+}
+
+video::-webkit-media-controls-time-remaining-display {
+  display: none;
+}
+
+/* Variables and keyframes */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 90deg;
+  inherits: true;
+}
+
+@property --gradX {
+  syntax: '<percentage>';
+  initial-value: 50%;
+  inherits: true;
+}
+
+@property --gradY {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: true;
+}
+
+@keyframes borderRotate {
+  100% {
+    --angle: 420deg;
+  }
+}
+
+@keyframes borderRadial {
+  20% {
+    --gradX: 100%;
+    --gradY: 50%;
+  }
+  40% {
+    --gradX: 100%;
+    --gradY: 100%;
+  }
+  60% {
+    --gradX: 50%;
+    --gradY: 100%;
+  }
+  80% {
+    --gradX: 0%;
+    --gradY: 50%;
+  }
+  100% {
+    --gradX: 50%;
+    --gradY: 0%;
+  }
+}
+
+/* Media query for larger screens (adjust breakpoint as needed) */
+@media (min-width: 768px) {
+
+  /* Video container (`.videoCont`) */
+  .videoCont {
+    /* min-width: 60%; Adjust as desired for larger screens */
+    margin: 0 auto; /* Center on larger screens */
+  }
+
+  /* Video header (`.videoHeader`) */
+  .videoHeader {
+    flex-direction: row; /* Align header elements horizontally */
+    justify-content: space-between; /* Space header elements evenly */
+  }
+}
+
+/* Default styles (apply to all screens) */
+:root {
+  --d: 2500ms;
+  --angle: 90deg;
+  --gradX: 100%;
+  --gradY: 50%;
+  --c1: rgb(6, 220, 34);
+  --c2: rgba(8, 41, 189, 0.324);
+}
+
+.videoCont {
+  /* padding: 20%; not recommended for responsiveness */
+  border-top: 7px solid rgb(204, 248, 204);
+  border-left: 7px solid rgb(204, 248, 204);
+  border-right: 7px solid rgb(48, 63, 48);
+  border-bottom: 7px solid rgb(48, 63, 48);
+  border-image: conic-gradient(from var(--angle), var(--c2), var(--c1) 0.1turn, var(--c1) 0.15turn, var(--c2) 0.25turn) 30;
+  animation: borderRotate var(--d) linear infinite forwards;
+  background-color: silver;
+  display: flex;
+  flex-direction: column; /* Stack elements vertically on smaller screens */
+  margin-bottom: 5%;
+}
+
+.videoHeader {
+  font-size: 1.5rem; /* Adjust font size for smaller screens */
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  color: rgb(23, 47, 128);
+  border: 3px solid gray;
+}
+
+.videoHeader > p:hover {
+  color: red
 }

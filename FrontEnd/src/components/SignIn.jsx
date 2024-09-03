@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+// import { Thi } from '@thirdweb-dev/sdk';
+// import { ConnectWallet, useConnectedWallet, useConnect } from '@thirdweb-dev/react';
 import * as Realm from "realm-web";
 import VideoPlayer from './VideoPlayer';
 import '../style/signin.css';
 
 const REALM_APP_ID = import.meta.env.VITE_REALM_APP_ID;
+// const THIRDWEB_CLIENT_ID = import.meta.env.VITE_BSCDEV1_THIRDWEB_CLIENT_ID;
 const app = new Realm.App({ id: REALM_APP_ID });
 const user = app.currentUser;
 const userIsAn0n = user && user.providerType === "anon-user" ? true : false;
@@ -15,20 +18,20 @@ const userIsAn0n = user && user.providerType === "anon-user" ? true : false;
 function UserDetail({ user }) {
     return (
       <div>
-        <h2>{userIsAn0n ? `hello an0n ${user.id}`: `hello ${user.profile.name}`}</h2>
+        <h2>{userIsAn0n ? `hello an0n ${user.id}`: `hello ${user.profile?.name}`}</h2>
       </div>
     );
   }
   
   // Create a component that lets an anonymous user log in
-  function Login({ setUser }) {
+function Login({ setUser }) {
     const navigate = useNavigate();
     const loginAnonymous = async () => {
-      const user = await app.logIn(Realm.Credentials.anonymous(false));
-      console.log("signin.jsx:  Login: user: ", user)
-      setUser(user);
-      navigate('/');
-      location.reload();
+        const user = await app.logIn(Realm.Credentials.anonymous(false));
+        console.log("signin.jsx:  Login: user: ", user)
+        setUser(user);
+        navigate('/');
+        location.reload();
     };
     const loginGoogle = async () => {
         const redirectUrl = window.location.origin;
@@ -40,21 +43,25 @@ function UserDetail({ user }) {
                 location.reload();
             })
             .catch((error) => {console.error("error logging in google: ", error)});
-        console.log("signin.jsx:  Login: user: ", user)
+            console.log("signin.jsx:  Login: user: ", user)
         
     };
     
     return (
+        
         <div className='loginCard'>
             <h2>Sign In</h2>
             <label>Sign in with Google</label>
             <br/>
             <button onClick={loginGoogle}>Google</button>
             <br/>
+            <label>Connect 0x Wallet</label>
+            {/* <ConnectWallet /> */}
             <label>Sign in as an0n</label>
             <br/>
             <button onClick={loginAnonymous}>an0n</button>
         </div>
+        
     
 
     );
@@ -64,6 +71,8 @@ function UserDetail({ user }) {
     // Keep the logged in Realm user in local state. This lets the app re-render
     // whenever the current user changes (e.g. logs in or logs out).
     const [user, setUser] = React.useState(app.currentUser);
+    const [wallet, setWallet] = React.useState(useConnectedWallet());
+    console.log("wallet at first render: ", wallet)
     // Realm.handleAuthRedirect();
     // await videoPlayer.requestPictureInPicture();
     // If a user is logged in, show their details.
@@ -71,7 +80,7 @@ function UserDetail({ user }) {
     return (
       <div className="App">
         <div className="signInCont">
-          {user ? <UserDetail user={user} /> : <Login setUser={setUser} />}
+          {user ? <UserDetail user={user} /> : <Login setUser={setUser} setWallet={setWallet} />}
         </div>
         <VideoPlayer triggerPIP={true}/>
       </div>
