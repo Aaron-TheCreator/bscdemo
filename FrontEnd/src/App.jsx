@@ -1,6 +1,6 @@
 import { Outlet, Link } from 'react-router-dom';
 import * as Realm from 'realm-web';
-import { ThirdwebProvider, ConnectWallet, Web3Button, useDisconnect } from '@thirdweb-dev/react';
+import { ThirdwebProvider, ConnectWallet, Web3Button, useConnect, useDisconnect } from '@thirdweb-dev/react';
 // import VideoPlayer from './components/VideoPlayer.jsx';
 import Comments from './components/Comments.jsx';
 import './App.css'
@@ -29,7 +29,7 @@ function App() {
     try {
       await app.currentUser.logOut();
       console.log("logged out");
-      console.log("wallet disconnected: ");
+      // console.log("wallet disconnected: ", disconnect);
       location.replace("/");
     } catch (error) {
       console.error("error logging out: ", error)
@@ -44,7 +44,7 @@ function App() {
       clientId={THIRDWEB_CLIENT_ID}
     >
       <header>
-        <h1><Link to={"/"}>Best Served Cold 🧊🥶 0.0.1</Link></h1>
+        <h1><Link to={"/"}>🥶Best Served Cold🧊</Link></h1>
         {user ? 
         <><div id='userId-login-btn'><Link to={"user"}>{"✅"}</Link></div>
         <ConnectWallet />

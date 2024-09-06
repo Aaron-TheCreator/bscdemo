@@ -46,11 +46,13 @@ const User = () => {
         }
         // console.log("comments fetched", commentsList)
     };
-
+    
+    const wallet = useWallet();
+    const ownedNFTs = useOwnedNFTs();
     const getUserOwnedTokens = async (user) => {
-        let wallet = useAddress();
-        useOwnedNFTs(user);
+        
         console.log("fetching user's owned tokens");
+        console.log("NFTS?: ",ownedNFTs);
         setUserOwnedTokens([`${user}test`, `${user}test2`, `${user}test3`]);
     };
 
@@ -58,7 +60,14 @@ const User = () => {
     // getTimeDifference(time, comment.comment.timeCommented).value
     useEffect(() => {
         getCommentsForUser(user);
-        getUserOwnedTokens(user);
+        if (wallet !== undefined) {
+            try {
+                getUserOwnedTokens(user);
+            } catch (error) {
+                console.log("error getting ownedNFTs: ", error)
+            }
+        }
+        
     }, [user]);
     return (
         <div>

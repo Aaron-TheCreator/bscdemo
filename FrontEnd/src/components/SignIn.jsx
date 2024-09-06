@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { Thi } from '@thirdweb-dev/sdk';
 // import { ConnectWallet, useConnectedWallet, useConnect } from '@thirdweb-dev/react';
 import * as Realm from "realm-web";
 import VideoPlayer from './VideoPlayer';
@@ -55,7 +54,7 @@ function Login({ setUser }) {
             <br/>
             <button onClick={loginGoogle}>Google</button>
             <br/>
-            <label>Connect 0x Wallet</label>
+            {/* <label>Connect 0x Wallet</label> */}
             {/* <ConnectWallet /> */}
             <label>Sign in as an0n</label>
             <br/>
@@ -71,8 +70,8 @@ function Login({ setUser }) {
     // Keep the logged in Realm user in local state. This lets the app re-render
     // whenever the current user changes (e.g. logs in or logs out).
     const [user, setUser] = React.useState(app.currentUser);
-    const [wallet, setWallet] = React.useState(useConnectedWallet());
-    console.log("wallet at first render: ", wallet)
+    // const [wallet, setWallet] = React.useState(useConnectedWallet());
+    // console.log("wallet at first render: ", wallet)
     // Realm.handleAuthRedirect();
     // await videoPlayer.requestPictureInPicture();
     // If a user is logged in, show their details.
@@ -80,7 +79,7 @@ function Login({ setUser }) {
     return (
       <div className="App">
         <div className="signInCont">
-          {user ? <UserDetail user={user} /> : <Login setUser={setUser} setWallet={setWallet} />}
+          {user ? <UserDetail user={user} /> : <Login setUser={setUser} />}
         </div>
         <VideoPlayer triggerPIP={true}/>
       </div>

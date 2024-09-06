@@ -243,6 +243,7 @@ h1 > a {
   header {
     flex-direction: row;
     justify-content: space-around;
+    background-image: none;
   }
   header:hover {
     background-image: url("/matrixy.gif");
